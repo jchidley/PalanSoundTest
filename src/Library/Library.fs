@@ -43,13 +43,11 @@ let sayAudioFile audF =
     outputDevice.PlaybackStopped.Add (onPlaybackStopped)
     outputDevice.Play()
 
-AWSConfigs.AWSProfileName <- "JackChidley"
-AWSConfigs.AWSRegion <- "eu-west-2" 
 
-// let endpoint = Amazon.RegionEndpoint.EUWest2
 // https://www.phon.ucl.ac.uk/home/wells/phoneticsymbolsforenglish_Unicode.htm
 
-// let pc = new AmazonPollyClient()
+AWSConfigs.AWSProfileName <- "JackChidley"
+AWSConfigs.AWSRegion <- "eu-west-2" 
 let pc = new AmazonPollyClient()
 
 let phonemeOut() = 
