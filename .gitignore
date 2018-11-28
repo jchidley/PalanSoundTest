@@ -449,15 +449,3 @@ bower_components
 .bower-cache
 .bower-registry
 .bower-tmp
-
-
-### WebSharper ###
-Scripts/
- Volume in drive C is Windows
- Volume Serial Number is B2D3-19CD
-
- Directory of C:\Users\jackc\git\SoundTest
-
-16/02/18  14:10               310 dotnet core .gitignore
-               1 File(s)            310 bytes
-               0 Dir(s)  115,712,012,288 bytes free
