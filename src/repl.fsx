@@ -6,10 +6,10 @@
 #load @".\Library\Library.fs"
 
 open Library
-let combinations = seq { for one in letters do 
-                            for two in letters do 
+let combinations = seq { for one in [|"E";"U";"T";"S";"F";"L"|] do 
+                            for two in [|"E";"U";"-T";"-S";"-F";"-L"|] do 
                                 // for crow in consonants do
-                                    yield (one.Palan + two.Palan)}
+                                    if one <> two then yield (one + two)}
 
 
     
@@ -25,7 +25,7 @@ let shuffleR (r : System.Random) xs = xs |> Seq.sortBy (fun _ -> r.Next())
 let c = shuffleR (System.Random()) b
 
 let out = combinations
-//seq [|"E";"U";"T";"S";"F";"L"; "-E";"-U";"-T";"-S";"-F";"-L"|]
+//seq [|"E";"U";"T";"S";"F";"L";"-T";"-S";"-F";"-L"|]
 //            |> Seq.map (fun x -> x.Palan) 
             |> Seq.fold (fun acc elem ->  acc + ",\n\"" + elem + "\" : \"" + elem.ToLower() + "{^}{#Return}{^}{-|}\"" ) ""
 
