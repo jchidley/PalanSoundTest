@@ -5,15 +5,18 @@
 #r @"C:\Users\jackc\.nuget\packages\awssdk.polly\3.3.9.4\lib\netstandard1.3\AWSSDK.Polly.dll"
 #load @".\Library\Library.fs"
 
-
 open Library
 let combinations = seq { for orow in consonants do 
                             for vrow in vowels do 
                                 for crow in consonants do
-                                    yield (orow.Palan + vrow.Palan + crow.Palan)}
+                                    yield (orow, vrow, crow)}
 
-let out = seq [|"E";"U";"T";"S";"F";"L"; "-E";"-U";"-T";"-S";"-F";"-L"|]
-//            |> Seq.map (fun x -> x.Palan) 
+// seq [|"E";"U";"T";"S";"F";"L"; "-E";"-U";"-T";"-S";"-F";"-L"|]
+
+[1..100] |> shuffleR (System.Random()) |> Seq.head
+
+let out = combinations
+            |> Seq.map (fun (x, y, z) -> x.Palan + y.Palan + z.Palan) 
             |> Seq.fold (fun acc elem ->  acc + ",\n\"" + elem + "\" : \"" + elem.ToLower() + "{^}{#Return}{^}{-|}\"" ) ""
 
 System.IO.File.WriteAllText(".\\out.json", out)

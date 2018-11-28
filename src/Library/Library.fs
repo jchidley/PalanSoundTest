@@ -6,19 +6,23 @@ open Amazon.Polly.Model
 open FSharp.Data
 open Amazon
 
-let phonemeDir = @".\sounds\"
-let oneDriveDir = @"C:\Users\jackc\OneDrive\Documents"
-let csvIPA = @"Phonetic symbols for English with Unicode numbers.csv"
-let fileIPA = oneDriveDir + "\\" + csvIPA
-let rnd = System.Random()
+let [<Literal>] assets = @".\assets"
+
+let [<Literal>] csvIPA = @"Phonetic symbols for English with Unicode numbers.csv"
+
+let  [<Literal>] fileIPA = __SOURCE_DIRECTORY__ + "\\" + csvIPA
+
+let rnd = Random()
+// https://stackoverflow.com/questions/33312260/how-can-i-select-a-random-value-from-a-list-using-f
+
+let shuffleR (r : Random) xs = xs |> Seq.sortBy (fun _ -> r.Next())
 let randPick (rnd:Random) arr = 
       Seq.item (rnd.Next(Seq.length arr)) arr
 
-type PhonemeData = CsvProvider<"""C:\Users\jackc\OneDrive\Documents\Phonetic symbols for English with Unicode numbers.csv""">
+type PhonemeData = CsvProvider<fileIPA>
 
 let palanLetters = [|"E";"U";"T";"S";"F";"L"|]
 let phonemeData = PhonemeData.Load(fileIPA)
-
 
 let vowels = phonemeData.Rows 
                 |> Seq.filter (fun r ->
@@ -43,7 +47,6 @@ let sayAudioFile audF =
     outputDevice.PlaybackStopped.Add (onPlaybackStopped)
     outputDevice.Play()
 
-
 // https://www.phon.ucl.ac.uk/home/wells/phoneticsymbolsforenglish_Unicode.htm
 
 AWSConfigs.AWSProfileName <- "JackChidley"
@@ -53,13 +56,9 @@ let pc = new AmazonPollyClient()
 let phonemeOut() = 
     let out = randPick rnd letters
     out.Palan, out.IPA
-    // let onset = randPick rnd consonants
-    // let vowel = randPick rnd vowels
-    // let coda = randPick rnd consonants
-    // onset, vowel, coda
 
 let writeOutput out = 
-  let fOut = (@".\sounds\" + out + ".mp3")
+  let fOut = (System.IO.Path.Combine (assets, out + ".mp3"))
   if (System.IO.File.Exists(fOut))
   then 
     ()
@@ -86,13 +85,13 @@ let rec readInput() =
     let palan, ipa = phonemeOut()
     printfn "%s %s" ipa palan
     writeOutput ipa
-    sayAudioFile (@".\sounds\" + ipa + ".mp3")
+    sayAudioFile (System.IO.Path.Combine (assets, ipa + ".mp3"))
     let inStr = (Console.ReadLine())
     let uInStr = inStr.ToUpper()
     if uInStr.Contains ("STOP")
     then 
         printfn "stopping"
-        sayAudioFile (@".\sounds\" + "stop" + ".mp3")
+        sayAudioFile (System.IO.Path.Combine (assets, "stop" + ".mp3")) 
         System.Threading.Thread.Sleep( 500 )
     else 
         // if uInStr.Contains palan 
@@ -103,6 +102,7 @@ let rec readInput() =
 
 let test () = 
     printfn "Type what you hear, press enter"
+    printfn "%s" System.Environment.CurrentDirectory
     writeOutput "jes"
     writeOutput "nəʊ"
     writeOutput "stop"

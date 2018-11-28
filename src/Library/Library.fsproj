@@ -6,6 +6,9 @@
     <Compile Include="Library.fs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="C:\Users\jackc\git\PalanSoundTest\src\Library\assets\Phonetic symbols for English with Unicode numbers.csv" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="AWSSDK.Polly" Version="3.3.9.4" />
     <PackageReference Include="FSharp.Data" Version="3.0.0" />
     <PackageReference Include="NAudio" Version="1.9.0-preview2" />
