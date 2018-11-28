@@ -15,8 +15,16 @@ let combinations = seq { for orow in consonants do
 
 [1..100] |> shuffleR (System.Random()) |> Seq.head
 
-let out = combinations
-            |> Seq.map (fun (x, y, z) -> x.Palan + y.Palan + z.Palan) 
+let a = [|"E";"U";"T";"S";"F";"L"|]
+
+let b =  ((a |> Array.create 20 ) |> Array.concat)
+
+let shuffleR (r : System.Random) xs = xs |> Seq.sortBy (fun _ -> r.Next())
+
+let c = shuffleR (System.Random()) b
+
+let out = seq [|"E";"U";"T";"S";"F";"L"; "-E";"-U";"-T";"-S";"-F";"-L"|]
+//            |> Seq.map (fun x -> x.Palan) 
             |> Seq.fold (fun acc elem ->  acc + ",\n\"" + elem + "\" : \"" + elem.ToLower() + "{^}{#Return}{^}{-|}\"" ) ""
 
 System.IO.File.WriteAllText(".\\out.json", out)

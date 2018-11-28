@@ -55,7 +55,13 @@ let pc = new AmazonPollyClient()
 
 let phonemeOut() = 
     let out = randPick rnd letters
-    out.Palan, out.IPA
+    let out2 = randPick rnd letters
+
+    out.Palan + out2.Palan, out.IPA + out2.IPA
+    // let onset = randPick rnd consonants
+    // let vowel = randPick rnd vowels
+    // let coda = randPick rnd consonants
+    // onset, vowel, coda
 
 let writeOutput out = 
   let fOut = (System.IO.Path.Combine (assets, out + ".mp3"))
