@@ -6,24 +6,26 @@
 #load @".\Library\Library.fs"
 
 open Library
-let combinations = seq { for orow in consonants do 
-                            for vrow in vowels do 
-                                for crow in consonants do
-                                    yield (orow, vrow, crow)}
+let combinations = seq { for one in letters do 
+                            for two in letters do 
+                                // for crow in consonants do
+                                    yield (one.Palan + two.Palan)}
+
+
+    
+    // for orow in consonants do 
+                            // for vrow in vowels do 
+                                // for crow in consonants do
+                                    // yield (orow, vrow, crow)}
 
 // seq [|"E";"U";"T";"S";"F";"L"; "-E";"-U";"-T";"-S";"-F";"-L"|]
-
-[1..100] |> shuffleR (System.Random()) |> Seq.head
-
 let a = [|"E";"U";"T";"S";"F";"L"|]
-
 let b =  ((a |> Array.create 20 ) |> Array.concat)
-
 let shuffleR (r : System.Random) xs = xs |> Seq.sortBy (fun _ -> r.Next())
-
 let c = shuffleR (System.Random()) b
 
-let out = seq [|"E";"U";"T";"S";"F";"L"; "-E";"-U";"-T";"-S";"-F";"-L"|]
+let out = combinations
+//seq [|"E";"U";"T";"S";"F";"L"; "-E";"-U";"-T";"-S";"-F";"-L"|]
 //            |> Seq.map (fun x -> x.Palan) 
             |> Seq.fold (fun acc elem ->  acc + ",\n\"" + elem + "\" : \"" + elem.ToLower() + "{^}{#Return}{^}{-|}\"" ) ""
 

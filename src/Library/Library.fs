@@ -53,11 +53,17 @@ AWSConfigs.AWSProfileName <- "JackChidley"
 AWSConfigs.AWSRegion <- "eu-west-2" 
 let pc = new AmazonPollyClient()
 
-let phonemeOut() = 
+let rec phonemeOut() = 
     let out = randPick rnd letters
     let out2 = randPick rnd letters
 
-    out.Palan + out2.Palan, out.IPA + out2.IPA
+    if out.Palan = out2.Palan
+    then phonemeOut()
+    else 
+        let p = out.Palan + out2.Palan
+        let i = out.IPA + out2.IPA
+        i, p
+
     // let onset = randPick rnd consonants
     // let vowel = randPick rnd vowels
     // let coda = randPick rnd consonants
