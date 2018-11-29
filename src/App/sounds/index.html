@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;&#10;charset=x-UNICODE-2-0-UTF-7">
+<style>
+
+body {font-family:"lucida sans unicode","doulos sil","gentium";}
+</style>
+</head>
+<body>
+
+<audio id="myAudio">
+  <source src="&#x28c;l.mp3" type="audio/mpeg"> 
+  Your browser does not support the audio element.
+</audio>
+
+<p>Click the buttons to play or pause the audio. fʌ.mp3 &#x28c;l.mp3</p>
+
+<button onclick="playAudio()" type="button">Play Audio</button>
+<button onclick="pauseAudio()" type="button">Pause Audio</button> 
+
+<script>
+var x = document.getElementById("myAudio"); 
+
+function playAudio() { 
+    x.play(); 
+} 
+
+function pauseAudio() { 
+    x.pause(); 
+} 
+</script>
+
+</body>
+</html>
